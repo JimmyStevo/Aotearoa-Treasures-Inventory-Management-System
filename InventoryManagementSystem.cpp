@@ -10,6 +10,9 @@ struct Inventory {
 
 int main{
 	int iInvChoice;
+	int iCount;
+	string sItemSelect;
+
 	while (i != 1) {
 		cout << "Select an option: ";
 		cout << "\n1. Change Stock of an Item.\n2. Change the price of an Item.\n3. Change Item Name.\n4. Add a new item.\n5. Remove an Item.\n6. Return to previous screen.\n7. Exit";
@@ -17,6 +20,12 @@ int main{
 
 		switch (iInvChoice) {
 		case 1:
+			for (int i = 0; i > inventory.size(); i++) {
+				cout << "\nWhich item would you like to edit?\n";
+				cout << sItemName[i] << "\n";
+
+				cin << sItemSelect;
+			}
 			break;
 		case 2:
 			break;
