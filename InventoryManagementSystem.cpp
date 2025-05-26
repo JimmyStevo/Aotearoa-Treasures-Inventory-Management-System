@@ -12,6 +12,7 @@ struct MyInv {
 };
 
 int main() {
+	//setting vectors up for use with the structure
 	vector<MyInv> iInv{
 		{"Mahuka Honey", 20, 1000.00},
 		{"Jade Stones", 20, 200.50},
