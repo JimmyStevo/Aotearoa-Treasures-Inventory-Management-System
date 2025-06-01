@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
 
 using namespace std;
 
@@ -10,6 +11,21 @@ struct MyInv {
 	int iStock;
 	double dPrice;
 };
+
+vector<MyInv> iInv{
+{"MAHUKA HONEY", 20, 1000.00},
+{"JADE STONES", 20, 200.50},
+{"KIWI PLUSHIE", 50, 25.00},
+{"ALL BLACKS JERSEY", 6, 60.00},
+{"BLACK CAP JERSEY", 34, 55.00},
+{"STICKERS", 100, 5.75},
+{"MAGNETS", 75, 6.95},
+{"BOOKS", 39, 12.50},
+{"STATIONARY", 42, 35.25},
+{"ALCOHOL", 17, 80.64}
+};
+
+vector<MyInv>::iterator it; // set up iterator to later be able to loop through vectors and delete / add items
 
 // function to update the amount of stock from an Admin side
 int UpdateStock(int iStockUpdate) {
@@ -47,25 +63,28 @@ void ConvertString(string& s) {
 	}
 }
 
+void DisplayProducts() {
+	cout << "Products listed at wellington:\n";
+	cout << setw(20) << "Name" << setw(15) << "Stock" << setw(20) << "Price" << "\n";
+	for (auto& MyInv : iInv) {
+		cout << setw(20) << MyInv.sItemName << setw(15) << MyInv.iStock << setw(20) << MyInv.dPrice << "\n";
+	}
+
+}
+
 int main() {
 
 
 	//setting vectors up for use with the structure
-	vector<MyInv> iInv{
-		{"MAHUKA HONEY", 20, 1000.00},
-		{"JADE STONES", 20, 200.50},
-		{"KIWI PLUSHIE", 50, 25.00},
-		{"ALL BLACKS JERSEY", 6, 60.00},
-		{"BLACK CAP JERSEY", 34, 55.00},
-		{"STICKERS", 100, 5.75},
-		{"MAGNETS", 75, 6.95},
-		{"BOOKS", 39, 12.50},
-		{"STATIONARY", 42, 35.25},
-		{"ALCOHOL", 17, 80.64}
-	};
+
+
+
 	int iInvChoice = 0;
 	string sItemSelect;
 	int i = 0;
+	int iAddInv;
+	double dAddPrice;
+
 
 
 	cout << "Select an option: ";
@@ -80,10 +99,10 @@ int main() {
 
 		switch (iInvChoice) {
 		case 1:
-			//for loop to list out the current stock, accounts for potentiall increased / decreased vector
-			for (int i = 0; i < iInv.size(); ++i) {
-				cout << iInv[i].sItemName << " \t " << iInv[i].iStock << "\t" << iInv[i].dPrice << "\n";
-			}
+			//call function to list out the stock with their prices
+
+			DisplayProducts();
+
 			cout << "\nWhich item would you like to edit?\n" << endl;
 			getline(cin, sItemSelect);
 
@@ -100,7 +119,7 @@ int main() {
 				//@@
 			};
 			if (iInv[i].sItemName == sItemSelect) {
-				cout << "succuss" << endl;
+				cout << "success" << endl;
 			}
 			else {
 				cout << "Enter a valid selection!\n";
@@ -112,10 +131,9 @@ int main() {
 
 			break;
 		case 2:
-			//for loop to list out the current stock, accounts for potentiall increased / decreased vector
-			for (int i = 0; i < iInv.size(); ++i) {
-				cout << iInv[i].sItemName << " \t " << iInv[i].iStock << "\t" << iInv[i].dPrice << "\n";
-			}
+			//call function to list out the stock with their prices
+
+			DisplayProducts();
 			cout << "\nWhich item would you like to edit?\n" << endl;
 			getline(cin, sItemSelect);
 
@@ -145,8 +163,39 @@ int main() {
 		case 3:
 			break;
 		case 4:
+			cout << "\nEnter a Product Name\n" << endl;
+			getline(cin, sItemSelect);
+
+
+			cout << "\nEnter the Amount of stock for the product:\n" << endl;
+			cin >> iAddInv;
+
+
+			cout << "\nEnter the Price of the product:\n" << endl;
+			cin >> dAddPrice;
+
+			iInv.push_back({ sItemSelect, iAddInv, dAddPrice });
+
+			DisplayProducts();
+
 			break;
-		case 5:
+		case 5: //case for removing an item in the vector
+			DisplayProducts();
+			cout << "what would you like to remove?:" << endl;
+			getline(cin, sItemSelect);
+
+			ConvertString(sItemSelect);
+
+			//for loop using the iterator to iterate through the vector to then remove an item
+			for (auto it = iInv.begin(); it != iInv.end(); ) {
+				if (it->sItemName == sItemSelect) {
+					it = iInv.erase(it);
+				}
+				else {
+					++it;
+				}
+			}
+
 			break;
 		case 6:
 			break;
