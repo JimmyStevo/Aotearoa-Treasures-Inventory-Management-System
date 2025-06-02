@@ -6,6 +6,8 @@
 using namespace std;
 
 //setting structure to house vectors for editing stock numbers / prices and adding new / removing old items
+
+
 struct MyInv {
 	string sItemName;
 	int iStock;
@@ -27,6 +29,35 @@ vector<MyInv> iInv{
 
 vector<MyInv>::iterator it; // set up iterator to later be able to loop through vectors and delete / add items
 
+
+class StockCheck {
+private:
+public:
+
+
+
+};
+
+void Check(int iStockCheck) {
+	if (iInv[iStockCheck].iStock <= 5) {
+		cout << iInv[iStockCheck].sItemName << " needs to be restocked current stock is: " << iInv[iStockCheck].iStock;
+	}
+}
+
+void ConvertString(string& s) {
+	for (int i = 0; i < s.length(); ++i) {
+		s[i] = toupper(s[i]);
+	}
+}
+
+void DisplayProducts() {
+	cout << "Products listed at wellington:\n";
+	cout << setw(20) << "Name" << setw(15) << "Stock" << setw(20) << "Price" << "\n";
+	for (auto& MyInv : iInv) {
+		cout << setw(20) << MyInv.sItemName << setw(15) << MyInv.iStock << setw(20) << MyInv.dPrice << "\n";
+	}
+
+}
 // function to update the amount of stock from an Admin side
 int UpdateStock(int iStockUpdate) {
 	cout << "Please enter the new stock amount:\n";
@@ -53,27 +84,50 @@ string ChangeName(string sChangeName) {
 	return sChangeName;
 };
 
-void AddNew();
+
+int AddNew() {
+	//call function to list out the stock with their prices
+	string sItemSelect;
+	DisplayProducts();
+
+	cout << "\nWhich item would you like to edit?\n" << endl;
+	getline(cin, sItemSelect);
+
+
+
+	ConvertString(sItemSelect);
+	cout << sItemSelect << endl;
+
+	int i = 0;
+
+	while (iInv[i].sItemName != sItemSelect) {
+		i++;
+		// add error handling here!!!!
+		//@@
+	};
+	if (iInv[i].sItemName == sItemSelect) {
+		cout << "success" << endl;
+	}
+	else {
+		cout << "Enter a valid selection!\n";
+	}
+
+	iInv[i].iStock = UpdateStock(iInv[i].iStock);
+
+
+	if (iInv[i].iStock <= 5) {
+		cout << iInv[i].sItemName << " needs to be restocked current stock is: " << iInv[i].iStock;
+	}
+	return i;
+};
 
 void Remove();
 
-void ConvertString(string& s) {
-	for (int i = 0; i < s.length(); ++i) {
-		s[i] = toupper(s[i]);
-	}
-}
 
-void DisplayProducts() {
-	cout << "Products listed at wellington:\n";
-	cout << setw(20) << "Name" << setw(15) << "Stock" << setw(20) << "Price" << "\n";
-	for (auto& MyInv : iInv) {
-		cout << setw(20) << MyInv.sItemName << setw(15) << MyInv.iStock << setw(20) << MyInv.dPrice << "\n";
-	}
 
-}
+
 
 int main() {
-
 
 	//setting vectors up for use with the structure
 
@@ -99,33 +153,8 @@ int main() {
 
 		switch (iInvChoice) {
 		case 1:
-			//call function to list out the stock with their prices
-
-			DisplayProducts();
-
-			cout << "\nWhich item would you like to edit?\n" << endl;
-			getline(cin, sItemSelect);
-
-
-
-			ConvertString(sItemSelect);
-			cout << sItemSelect << endl;
-
-			i = 0;
-
-			while (iInv[i].sItemName != sItemSelect) {
-				i++;
-				// add error handling here!!!!
-				//@@
-			};
-			if (iInv[i].sItemName == sItemSelect) {
-				cout << "success" << endl;
-			}
-			else {
-				cout << "Enter a valid selection!\n";
-			}
-
-			iInv[i].iStock = UpdateStock(iInv[i].iStock);
+			AddNew();
+			//Check(iInv[i].iStock);
 
 			cout << iInv[i].iStock;
 
